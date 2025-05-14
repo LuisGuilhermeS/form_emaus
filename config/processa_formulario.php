@@ -12,9 +12,6 @@ if (!empty($dados)) {
  //criar contatos
  if($dados['type'] === 'criar'){
 
-
-
-
  }
  
 //seleção de dados
