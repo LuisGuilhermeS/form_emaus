@@ -27,6 +27,7 @@ include 'templates/header.php';
                         <td scope="row"><?= $paciente['cpf'] ?></td>
                         <td class="actions">
                             <a class="btn edit bg-warning" href=" <?= $BASE_URL ?>imprimi.php?id=<?= $paciente['id'] ?>" type="submit">imprimir</a>
+                            <a class ="btn  edit bg-secondary" href="<?= $BASE_URL?> edit.php?id=<?= $paciente['id'] ?>" type="submit">editar</a>
                             <a class="btn delete bg-danger" type="submit" onclick="return confirm('deseja excluir esse cadastro?')">excluir</a>
                         </td>
                     </tr>

@@ -55,6 +55,12 @@
     }
 }
 
+@media (max-width: 480px){
+
+    #home-link{
+        display: none;
+    }
+}
 
 .outro-campo {
     display: none;
