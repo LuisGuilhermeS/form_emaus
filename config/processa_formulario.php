@@ -149,8 +149,9 @@ if (!empty($dados)) {
             echo "erro: $error";
         }
 
-    } else if($dados['type'] === 'edit'){
-        
+    } else if ($dados['type'] === 'edit') {
+
+
         $id = $dados['id'];
         $data_chegada = $dados['data_chegada'];
         $data_saida = $dados['data_saida'];
@@ -200,10 +201,110 @@ if (!empty($dados)) {
         $motivos_procura = $dados['motivos_procura'];
         $projeto_vida = $dados['projeto_vida'];
 
+        $query = 'UPDATE pacientes 
+        SET data_chegada=:data_chegada, data_saida=:data_saida, pernoite=:pernoite,
+        nome=:nome, nacionalidade=:nacionalidade, data_nasc=:data_nasc, idade=:idade, sus=:sus, cpf=:cpf, rg=:rg, nome_pai=:nome_pai, nome_mae=:nome_mae, estado_civil=:estado_civil, filhos=:filhos, qtd_filhos=:qtd_filhos,
+        local_pernoite=:local_pernoite, local_procedencia=:local_procedencia, chegada=:chegada, encaminhamento_documentos=:encaminhamento_documentos, contato_familia=:contato_familia,
+        tempo_rua=:tempo_rua, motivo_rua=:motivo_rua, motivo_rua_outros=:motivo_rua_outros, motivo_encaminhamento=:motivo_encaminhamento,
+        documentos=:documentos, documentos_outros=:documentos_outros, programas_sociais=:programas_sociais,descricao_programa=:descricao_programa,
+        condicao_atual=:condicao_atual, condicao_outros=:condicao_outros, pertences=:pertences, acolhimento_anterior=:acolhimento_anterior,
+        privacao_liberdade=:privacao_liberdade, localidade_privacao=:localidade_privacao, tempo_privacao=:tempo_privacao,
+        relato_historico=:relato_historico,
+        uso_medicamentos=:uso_medicamentos, descricao_medicamentos=:descricao_medicamentos,
+        uso_drogas=:uso_drogas, descricao_droga=:descricao_droga,
+        problema_saude=:problema_saude, descricao_saude=:descricao_saude,
+        escolaridade=:escolaridade, trabalho=:trabalho, renda=:renda,
+        motivos_procura=:motivos_procura, projeto_vida=:projeto_vida
+        WHERE id=:id';
 
+        $stmt = $conn->prepare($query);
+
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':data_chegada', $data_chegada);
+        $stmt->bindParam(':data_saida', $data_saida);
+        $stmt->bindParam(':pernoite', $pernoite);
+        $stmt->bindParam(':nome', $nome);
+        $stmt->bindParam(':nacionalidade', $nacionalidade);
+        $stmt->bindParam(':data_nasc', $data_nasc);
+        $stmt->bindParam(':idade', $idade);
+        $stmt->bindParam(':sus', $sus);
+        $stmt->bindParam(':cpf', $cpf);
+        $stmt->bindParam(':rg', $rg);
+        $stmt->bindParam(':nome_pai', $nome_pai);
+        $stmt->bindParam(':nome_mae', $nome_mae);
+        $stmt->bindParam(':estado_civil', $estado_civil);
+        $stmt->bindParam(':filhos', $filhos);
+        $stmt->bindParam(':qtd_filhos', $qtd_filhos);
+        $stmt->bindParam(':local_pernoite', $local_pernoite);
+        $stmt->bindParam(':local_procedencia', $local_procedencia);
+        $stmt->bindParam(':chegada', $chegada);
+        $stmt->bindParam(':encaminhamento_documentos', $encaminhamento_documentos);
+        $stmt->bindParam(':contato_familia', $contato_familia);
+        $stmt->bindParam(':tempo_rua', $tempo_rua);
+        $stmt->bindParam(':motivo_rua', $motivo_rua);
+        $stmt->bindParam(':motivo_rua_outros', $motivo_rua_outros);
+        $stmt->bindParam(':motivo_encaminhamento', $motivo_encaminhamento);
+        $stmt->bindParam(':documentos', $documentos);
+        $stmt->bindParam(':documentos_outros', $documentos_outros);
+        $stmt->bindParam(':programas_sociais', $programas_sociais);
+        $stmt->bindParam(':descricao_programa', $descricao_programa);
+        $stmt->bindParam(':condicao_atual', $condicao_atual);
+        $stmt->bindParam(':condicao_outros', $condicao_outros);
+        $stmt->bindParam(':pertences', $pertences);
+        $stmt->bindParam(':acolhimento_anterior', $acolhimento_anterior);
+        $stmt->bindParam(':privacao_liberdade', $privacao_liberdade);
+        $stmt->bindParam(':localidade_privacao', $localidade_privacao);
+        $stmt->bindParam(':tempo_privacao', $tempo_privacao);
+        $stmt->bindParam(':relato_historico', $relato_historico);
+        $stmt->bindParam(':uso_medicamentos', $uso_medicamentos);
+        $stmt->bindParam(':descricao_medicamentos', $descricao_medicamentos);
+        $stmt->bindParam(':uso_drogas', $uso_drogas);
+        $stmt->bindParam(':descricao_droga', $descricao_droga);
+        $stmt->bindParam(':problema_saude', $problema_saude);
+        $stmt->bindParam(':descricao_saude', $descricao_saude);
+        $stmt->bindParam(':escolaridade', $escolaridade);
+        $stmt->bindParam(':trabalho', $trabalho);
+        $stmt->bindParam(':renda', $renda);
+        $stmt->bindParam(':motivos_procura', $motivos_procura);
+        $stmt->bindParam(':projeto_vida', $projeto_vida);
+
+        try {
+
+            $stmt->execute();
+
+            $_SESSION['msg'] = 'paciente atualizado com sucesso!';
+
+        } catch (PDOException $e) {
+            //erro na conexão
+            $error = $e->getMessage();
+
+            echo "erro: $error";
+        }
+    } else if ($dados['type'] === 'delete') {
+        
+        $id = $dados['id'];
+        
+        $query = 'DELETE FROM pacientes WHERE id = :id';
+        
+        $stmt = $conn-> prepare($query);
+         
+        $stmt->bindParam('id',$id);
+         
+        try {
+
+            $stmt->execute();
+
+            $_SESSION['msg'] = 'paciente removido com sucesso!';
+
+        } catch (PDOException $e) {
+            //erro na conexão
+            $error = $e->getMessage();
+
+            echo "erro: $error";
+        }
     }
 
- header('location:' . $BASE_URL .'../index.php' );
+    header('location:' . $BASE_URL . '../index.php');
     //seleção de dados
 } else {
 
@@ -239,5 +340,4 @@ if (!empty($dados)) {
 
 //fechar conexão
 $conn = null;
-
 ?>
