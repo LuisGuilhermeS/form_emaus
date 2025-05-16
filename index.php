@@ -26,13 +26,15 @@ include 'templates/header.php';
                         <td scope="row"><?= $paciente['nome'] ?></td>
                         <td scope="row"><?= $paciente['cpf'] ?></td>
                         <td class="actions">
-                            <a class="btn edit bg-warning" href=" <?= $BASE_URL ?>imprimi.php?id=<?= $paciente['id'] ?>" type="submit">imprimir</a>
-                            <a class ="btn edit bg-secondary" href=" <?= $BASE_URL ?>edit.php?id=<?= $paciente['id'] ?>" type="submit">editar</a>
+                            <div class="d-flex flex-column flex-md-row gap-2">
+                            <a class="btn edit border border-success" href=" <?= $BASE_URL ?>imprimi.php?id=<?= $paciente['id'] ?>" type="submit">imprimir</a>
+                            <a class ="btn edit border border-primary" href=" <?= $BASE_URL ?>edit.php?id=<?= $paciente['id'] ?>" type="submit">editar</a>
                             <form class="d-inline-block" action="<?= $BASE_URL?>/config/processa_formulario.php" method="POST">
                                 <input type="hidden" name="type" value="delete">
                                 <input type="hidden" name="id" value="<?= $paciente['id']?>">
-                                <button class="btn delete bg-danger" type="submit" onclick="return confirm('deseja excluir esse cadastro?')">excluir</button>
+                                <button class="btn delete border border-danger" type="submit" onclick="return confirm('deseja excluir esse cadastro?')">excluir</button>
                             </form>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>

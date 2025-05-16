@@ -288,7 +288,7 @@ if (!empty($dados)) {
         
         $stmt = $conn-> prepare($query);
          
-        $stmt->bindParam('id',$id);
+        $stmt->bindParam(':id',$id);
          
         try {
 
