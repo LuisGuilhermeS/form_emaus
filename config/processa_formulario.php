@@ -11,6 +11,26 @@ if (!empty($dados)) {
     //criar contatos
     if ($dados['type'] === 'criar') {
 
+        if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
+        $nomeTemporario = $_FILES['arquivo']['tmp_name'];
+        $nomeOriginal = basename($_FILES['arquivo']['name']);
+        $extensao = pathinfo($nomeOriginal, PATHINFO_EXTENSION);
+
+        // Gera um nome único e define o destino
+        $novoNome = uniqid('arquivo_') . '.' . $extensao;
+        $destino = 'uploads/' . $novoNome;
+
+        // Move o arquivo para a pasta desejada
+        if (move_uploaded_file($nomeTemporario, $destino)) {
+            $arquivo = $novoNome; // Salva no banco apenas o nome, não o caminho completo
+        } else {
+            $_SESSION['msg'] = 'Erro ao mover o arquivo.';
+            header("Location: ../index.php");
+            exit();
+        }
+    } else {
+        $arquivo = null; // ou trate conforme necessário (ex: obrigatório ou opcional)
+    }
         $data_chegada = $dados['data_chegada'];
         $data_saida = $dados['data_saida'];
         $pernoite = $dados['pernoite'];
@@ -59,7 +79,7 @@ if (!empty($dados)) {
         $motivos_procura = $dados['motivos_procura'];
         $projeto_vida = $dados['projeto_vida'];
 
-        $query = 'INSERT INTO pacientes (data_chegada, data_saida, pernoite,
+        $query = 'INSERT INTO pacientes (arquivo,data_chegada, data_saida, pernoite,
         nome, nacionalidade, data_nasc, idade, sus, cpf, rg,nome_pai, nome_mae, estado_civil, filhos, qtd_filhos,
         local_pernoite, local_procedencia, chegada, encaminhamento_documentos,contato_familia,
         tempo_rua, motivo_rua,motivo_rua_outros,motivo_encaminhamento,
@@ -73,7 +93,7 @@ if (!empty($dados)) {
         escolaridade, trabalho, renda,
         motivos_procura, projeto_vida)
 
-        VALUES (:data_chegada, :data_saida, :pernoite,
+        VALUES (:arquivo,:data_chegada, :data_saida, :pernoite,
         :nome, :nacionalidade, :data_nasc, :idade, :sus, :cpf, :rg, :nome_pai, :nome_mae, :estado_civil, :filhos, :qtd_filhos,
         :local_pernoite, :local_procedencia, :chegada, :encaminhamento_documentos, :contato_familia,
         :tempo_rua, :motivo_rua, :motivo_rua_outros, :motivo_encaminhamento,
@@ -86,9 +106,10 @@ if (!empty($dados)) {
         :problema_saude, :descricao_saude,
         :escolaridade, :trabalho, :renda,
         :motivos_procura, :projeto_vida)';
-
+        
         $stmt = $conn->prepare($query);
 
+        $stmt->bindParam(':arquivo', $arquivo);
         $stmt->bindParam(':data_chegada', $data_chegada);
         $stmt->bindParam(':data_saida', $data_saida);
         $stmt->bindParam(':pernoite', $pernoite);
@@ -151,6 +172,26 @@ if (!empty($dados)) {
 
     } else if ($dados['type'] === 'edit') {
 
+        if (isset($_FILES['arquivo']) && $_FILES['arquivo']['error'] === UPLOAD_ERR_OK) {
+        $nomeTemporario = $_FILES['arquivo']['tmp_name'];
+        $nomeOriginal = basename($_FILES['arquivo']['name']);
+        $extensao = pathinfo($nomeOriginal, PATHINFO_EXTENSION);
+
+        // Gera um nome único e define o destino
+        $novoNome = uniqid('arquivo_') . '.' . $extensao;
+        $destino = 'uploads/' . $novoNome;
+
+        // Move o arquivo para a pasta desejada
+        if (move_uploaded_file($nomeTemporario, $destino)) {
+            $arquivo = $novoNome; // Salva no banco apenas o nome, não o caminho completo
+        } else {
+            $_SESSION['msg'] = 'Erro ao mover o arquivo.';
+            header("Location: ../index.php");
+            exit();
+        }
+    } else {
+        $arquivo = null; // ou trate conforme necessário (ex: obrigatório ou opcional)
+    }
 
         $id = $dados['id'];
         $data_chegada = $dados['data_chegada'];
@@ -202,7 +243,7 @@ if (!empty($dados)) {
         $projeto_vida = $dados['projeto_vida'];
 
         $query = 'UPDATE pacientes 
-        SET data_chegada=:data_chegada, data_saida=:data_saida, pernoite=:pernoite,
+        SET arquivo=:arquivo,data_chegada=:data_chegada, data_saida=:data_saida, pernoite=:pernoite,
         nome=:nome, nacionalidade=:nacionalidade, data_nasc=:data_nasc, idade=:idade, sus=:sus, cpf=:cpf, rg=:rg, nome_pai=:nome_pai, nome_mae=:nome_mae, estado_civil=:estado_civil, filhos=:filhos, qtd_filhos=:qtd_filhos,
         local_pernoite=:local_pernoite, local_procedencia=:local_procedencia, chegada=:chegada, encaminhamento_documentos=:encaminhamento_documentos, contato_familia=:contato_familia,
         tempo_rua=:tempo_rua, motivo_rua=:motivo_rua, motivo_rua_outros=:motivo_rua_outros, motivo_encaminhamento=:motivo_encaminhamento,
@@ -220,6 +261,7 @@ if (!empty($dados)) {
         $stmt = $conn->prepare($query);
 
         $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':arquivo',$arquivo);
         $stmt->bindParam(':data_chegada', $data_chegada);
         $stmt->bindParam(':data_saida', $data_saida);
         $stmt->bindParam(':pernoite', $pernoite);

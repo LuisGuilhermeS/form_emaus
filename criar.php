@@ -7,7 +7,7 @@ include_once 'templates/header.php'
   </div>
 
   <!-- Formulário principal -->
-  <form method="POST" action="<?= $BASE_URL ?>config/processa_formulario.php">
+  <form method="POST" action="<?= $BASE_URL ?>config/processa_formulario.php" enctype="multipart/form-data">
     <input type="hidden" name="type" value="criar">
 
     <!-- Datas -->
@@ -33,18 +33,19 @@ include_once 'templates/header.php'
 
     <!-- Dados de Identificação -->
     <h4 class="text-center mb-4">Dados de Identificação</h4>
-    <div class="row mb-3">
-  <div class="col-md-6">
-    <label class="form-label">Nome Completo</label>
-    <input type="text" name="nome" id="nome" class="form-control" value="<?= htmlspecialchars($pacientes['nome'] ?? '') ?>" required>
-  </div>
+  <div class="row mb-3">
+      <div class="col-md-6">
+      <label class="form-label">Nome Completo</label>
+      <input type="text" name="nome" id="nome" class="form-control" value="<?= htmlspecialchars($pacientes['nome'] ?? '') ?>" required>
+      </div>
 
-  <div class="col-md-6">
+    <div class="col-md-6">
     <label class="form-label">Nacionalidade</label>
     <input type="text" name="nacionalidade" id="nacionalidade" class="form-control"
       value="<?= htmlspecialchars($pacientes['nacionalidade'] ?? '') ?>">
+    </div>
   </div>
-</div>
+
 <div class="row mb-3">
   <div class="col-md-3">
     <label for="data_nasc" class="form-label">Data de Nascimento</label>
@@ -85,7 +86,7 @@ include_once 'templates/header.php'
 </div>
 
 <div class="row mb-3">
-  <div class="col-md-6">
+  <div class="col-md-4">
     <label class="form-label">Estado Civil</label>
     <select name="estado_civil" class="form-select">
       <option value="">Selecione</option>
@@ -100,7 +101,7 @@ include_once 'templates/header.php'
     </select>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-4">
     <label class="form-label">Tem Filhos?</label>
     <select name="filhos" id="filhos" class="form-select" onchange="mostrarCampoFilhos()">
       <option value="">Selecione</option>
@@ -112,7 +113,12 @@ include_once 'templates/header.php'
         value="<?= htmlspecialchars($pacientes['qtd_filhos'] ?? '') ?>">
     </div>
   </div>
+  <div class="col-md-4">
+    <label for="arquivo" class="form-label">Anexar arquivo (PDF ou imagem):</label>
+      <input type="file" name="arquivo" id="arquivo" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
+  </div>
 </div>
+  
 
 <script>
   document.getElementById('data_nasc').addEventListener('change', function () {

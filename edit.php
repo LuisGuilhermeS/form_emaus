@@ -7,7 +7,7 @@ include_once 'templates/header.php'
     </div>
 
     <!-- Formulário principal -->
-    <form method="POST" action="<?= $BASE_URL ?>config/processa_formulario.php">
+    <form method="POST" action="<?= $BASE_URL ?>config/processa_formulario.php" enctype="multipart/form-data">
         <input type="hidden" name="type" value="edit">
         <input type="hidden" name="id" value="<?= $paciente['id'] ?>">
 
