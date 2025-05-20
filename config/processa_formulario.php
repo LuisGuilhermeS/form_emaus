@@ -4,7 +4,6 @@ include 'conexao.php';
 include 'url.php';
 
 $dados = $_POST;
-
 //modificações de banco
 if (!empty($dados)) {
 
@@ -15,11 +14,9 @@ if (!empty($dados)) {
         $nomeTemporario = $_FILES['arquivo']['tmp_name'];
         $nomeOriginal = basename($_FILES['arquivo']['name']);
         $extensao = pathinfo($nomeOriginal, PATHINFO_EXTENSION);
-
         // Gera um nome único e define o destino
         $novoNome = uniqid('arquivo_') . '.' . $extensao;
         $destino = 'uploads' .'/'. $novoNome;
-
         // Move o arquivo para a pasta desejada
         if (move_uploaded_file($nomeTemporario, $destino)) {
             $arquivo = $novoNome; // Salva no banco apenas o nome, não o caminho completo
@@ -160,13 +157,10 @@ if (!empty($dados)) {
 
         try {
             $stmt->execute();
-
             $_SESSION['msg'] = 'paciente cadastrado com sucesso!';
-
         } catch (PDOException $e) {
             //erro na conexão
             $error = $e->getMessage();
-
             echo "erro: $error";
         }
 
@@ -176,11 +170,9 @@ if (!empty($dados)) {
         $nomeTemporario = $_FILES['arquivo']['tmp_name'];
         $nomeOriginal = basename($_FILES['arquivo']['name']);
         $extensao = pathinfo($nomeOriginal, PATHINFO_EXTENSION);
-
         // Gera um nome único e define o destino
         $novoNome = uniqid('arquivo_') . '.' . $extensao;
         $destino = 'uploads/' . $novoNome;
-
         // Move o arquivo para a pasta desejada
         if (move_uploaded_file($nomeTemporario, $destino)) {
             $arquivo = $novoNome; // Salva no banco apenas o nome, não o caminho completo
@@ -193,7 +185,6 @@ if (!empty($dados)) {
     } else {
         $arquivo = null; // ou trate conforme necessário (ex: obrigatório ou opcional)
     }
-
         $id = $dados['id'];
         $data_chegada = $dados['data_chegada'];
         $data_saida = $dados['data_saida'];
@@ -314,13 +305,10 @@ if (!empty($dados)) {
         try {
 
             $stmt->execute();
-
             $_SESSION['msg'] = 'paciente atualizado com sucesso!';
-
         } catch (PDOException $e) {
             //erro na conexão
             $error = $e->getMessage();
-
             echo "erro: $error";
         }
     } else if ($dados['type'] === 'delete') {
@@ -336,13 +324,10 @@ if (!empty($dados)) {
         try {
 
             $stmt->execute();
-
             $_SESSION['msg'] = 'paciente removido com sucesso!';
-
         } catch (PDOException $e) {
             //erro na conexão
             $error = $e->getMessage();
-
             echo "erro: $error";
         }
     }
