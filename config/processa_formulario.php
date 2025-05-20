@@ -18,7 +18,7 @@ if (!empty($dados)) {
 
         // Gera um nome único e define o destino
         $novoNome = uniqid('arquivo_') . '.' . $extensao;
-        $destino = 'uploads/' . $novoNome;
+        $destino = 'uploads' .'/'. $novoNome;
 
         // Move o arquivo para a pasta desejada
         if (move_uploaded_file($nomeTemporario, $destino)) {
@@ -185,6 +185,7 @@ if (!empty($dados)) {
         if (move_uploaded_file($nomeTemporario, $destino)) {
             $arquivo = $novoNome; // Salva no banco apenas o nome, não o caminho completo
         } else {
+            $arquivo = $dados['arquivo'];// se o uploadi falhar, mantém o arquivo atual.
             $_SESSION['msg'] = 'Erro ao mover o arquivo.';
             header("Location: ../index.php");
             exit();

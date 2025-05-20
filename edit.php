@@ -126,8 +126,15 @@ include_once 'templates/header.php'
                 </div>
             </div>
             <div class="col-md-4">
-                <label for="arquivo" class="form-label">Anexar arquivo (PDF ou imagem):</label>
-                <input type="file" name="arquivo" id="arquivo" class="form-control" accept=".pdf,.jpg,.jpeg,.png,.pdf,">
+                <label for="arquivo" class="form-label">Anexar outro arquivo (PDF ou imagem):</label>
+                <input type="file" name="arquivo" id="arquivo" class="form-control"
+                    value="<?= htmlspecialchars($paciente['arquivo'] ?? '') ?>">
+                     <?php if (!empty($paciente['arquivo'])): ?>
+    <a href="config/uploads/<?= htmlspecialchars($paciente['arquivo']) ?>" target="_blank" name="arquivo">Ver arquivo atual</a>
+        <?php else: ?>
+        Nenhum arquivo enviado.
+        <input type="file" name="arquivo" id="arquivo" class="form-control" accept=".pdf,.jpg,.jpeg,.png,.pdf," value="<?= htmlspecialchars($paciente['arquivo']) ?? '' ?>">
+        <?php endif; ?>
             </div>
         </div>
 
