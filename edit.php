@@ -1,5 +1,5 @@
 <?php
-include_once 'templates/header.php'
+include_once 'templates/header.php';
     ?>
 <div class="print-container">
     <div class="text-center">
