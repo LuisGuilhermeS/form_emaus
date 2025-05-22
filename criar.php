@@ -86,7 +86,7 @@ include_once 'templates/header.php'
 </div>
 
 <div class="row mb-3">
-  <div class="col-md-4">
+  <div class="col-md-6">
     <label class="form-label">Estado Civil</label>
     <select name="estado_civil" class="form-select">
       <option value="">Selecione</option>
@@ -101,7 +101,7 @@ include_once 'templates/header.php'
     </select>
   </div>
 
-  <div class="col-md-4">
+  <div class="col-md-6">
     <label class="form-label">Tem Filhos?</label>
     <select name="filhos" id="filhos" class="form-select" onchange="mostrarCampoFilhos()">
       <option value="">Selecione</option>
@@ -111,14 +111,20 @@ include_once 'templates/header.php'
     <div id="campo_filhos" class="mt-2" style="display:none;">
       <input type="text" name="qtd_filhos" id="qtd_filhos" class="form-control" placeholder="quantidade de filhos"
         value="<?= htmlspecialchars($pacientes['qtd_filhos'] ?? '') ?>">
+      </div>
     </div>
   </div>
-  <div class="col-md-4">
-    <label for="arquivo" class="form-label">Anexar arquivo (PDF ou imagem):</label>
-      <input type="file" name="arquivo" id="arquivo" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label for="arquivo" class="form-label">Anexar Documentos, RG ou CPF (PDF ou imagem):</label>
+        <input type="file" name="arquivo" id="arquivo" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
+    </div>
   </div>
-</div>
-  
+  <div class="col-md-6">
+    <label for="document" class="form-label">Anexar arquivo,Cartão SUS ou outro (pdf ou imagem):</label>
+    <input type="file" name="document" id="document" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
+  </div>
 
 <script>
   document.getElementById('data_nasc').addEventListener('change', function () {

@@ -92,7 +92,7 @@ include_once 'templates/header.php';
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label class="form-label">Estado Civil</label>
                 <select name="estado_civil" class="form-select">
                     <option value="">Selecione</option>
@@ -112,7 +112,7 @@ include_once 'templates/header.php';
                 </select>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label class="form-label">Tem Filhos?</label>
                 <select name="filhos" id="filhos" class="form-select" onchange="mostrarCampoFilhos()">
                     <option value="">Selecione</option>
@@ -125,15 +125,26 @@ include_once 'templates/header.php';
                         value="<?= htmlspecialchars($paciente['qtd_filhos'] ?? '') ?>">
                 </div>
             </div>
-            <div class="col-md-4">
-                <label for="arquivo" class="form-label">Anexar outro arquivo (PDF ou imagem):</label>
+        </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                <label for="arquivo" class="form-label">Anexar RG ou CPF (PDF ou imagem):</label>
                 <input type="file" name="arquivo" id="arquivo" class="form-control"
                     value="<?= htmlspecialchars($paciente['arquivo'] ?? '') ?>">
                      <?php if (!empty($paciente['arquivo'])): ?>
     <a href="config/uploads/<?= htmlspecialchars($paciente['arquivo']) ?>" target="_blank" name="arquivo">Ver arquivo atual</a>
         <?php else: ?>
         Nenhum arquivo enviado.
-        <input type="file" name="arquivo" id="arquivo" class="form-control" accept=".pdf,.jpg,.jpeg,.png,.pdf," value="<?= htmlspecialchars($paciente['arquivo']) ?? '' ?>">
+        <?php endif; ?>
+            </div>
+            <div class="col-md-6">
+                <label for="arquivo" class="form-label">Anexar Arquivo,Cartão SUS (PDF ou imagem):</label>
+                <input type="file" name="document" id="document" class="form-control"
+                    value="<?= htmlspecialchars($paciente['document'] ?? '') ?>">
+                     <?php if (!empty($paciente['document'])): ?>
+    <a href="config/uploads/<?= htmlspecialchars($paciente['document']) ?>" target="_blank" name="arquivo">Ver arquivo atual</a>
+        <?php else: ?>
+        Nenhum arquivo enviado.
         <?php endif; ?>
             </div>
         </div>
