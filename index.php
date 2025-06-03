@@ -8,6 +8,21 @@ include 'templates/header.php';
     <?php if (isset($printMsg) && $printMsg != ''): ?>
         <P id="msg"><?= $printMsg ?></P>
     <?php endif; ?>
+    <!--pesquisa por nome-->
+    <input type="text" id="busca" class="form-control" placeholder="Buscar por nome...">
+
+<script>
+document.getElementById("busca").addEventListener("keyup", function() {
+    let filtro = this.value.toLowerCase();
+    let linhas = document.querySelectorAll("table tbody tr");
+
+    linhas.forEach(function(linha) {
+        let nome = linha.cells[1].textContent.toLowerCase(); // Assume que o nome está na primeira coluna
+        linha.style.display = nome.includes(filtro) ? "" : "none";
+    });
+});
+</script>
+                    <!--tabela-->
     <h1>Pacientes Cadastrados</h1>
     <?php if (count($pacientes) > 0): ?>
         <table class="table table-bordered table-striped" id="pacientes-table">

@@ -1,6 +1,6 @@
 <?php
 include_once 'templates/header.php';
-    ?>
+?>
 <div class="print-container">
     <div class="text-center">
         <a class=" btn btn-primary" id="home-link" href="<?= $BASE_URL ?>index.php">Página Inicial</a>
@@ -126,26 +126,28 @@ include_once 'templates/header.php';
                 </div>
             </div>
         </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
+        <div class="row mb-3">
+            <div class="col-md-6">
                 <label for="arquivo" class="form-label">Anexar RG ou CPF (PDF ou imagem):</label>
                 <input type="file" name="arquivo" id="arquivo" class="form-control"
                     value="<?= htmlspecialchars($paciente['arquivo'] ?? '') ?>">
-                     <?php if (!empty($paciente['arquivo'])): ?>
-    <a href="config/uploads/<?= htmlspecialchars($paciente['arquivo']) ?>" target="_blank" name="arquivo">Ver arquivo atual</a>
-        <?php else: ?>
-        Nenhum arquivo enviado.
-        <?php endif; ?>
+                <?php if (!empty($paciente['arquivo'])): ?>
+                    <a href="config/uploads/<?= htmlspecialchars($paciente['arquivo']) ?>" target="_blank"
+                        name="arquivo">Ver arquivo atual</a>
+                <?php else: ?>
+                    Nenhum arquivo enviado.
+                <?php endif; ?>
             </div>
             <div class="col-md-6">
                 <label for="arquivo" class="form-label">Anexar Arquivo,Cartão SUS (PDF ou imagem):</label>
                 <input type="file" name="document" id="document" class="form-control"
                     value="<?= htmlspecialchars($paciente['document'] ?? '') ?>">
-                     <?php if (!empty($paciente['document'])): ?>
-    <a href="config/uploads/<?= htmlspecialchars($paciente['document']) ?>" target="_blank" name="arquivo">Ver arquivo atual</a>
-        <?php else: ?>
-        Nenhum arquivo enviado.
-        <?php endif; ?>
+                <?php if (!empty($paciente['document'])): ?>
+                    <a href="config/uploads/<?= htmlspecialchars($paciente['document']) ?>" target="_blank"
+                        name="arquivo">Ver arquivo atual</a>
+                <?php else: ?>
+                    Nenhum arquivo enviado.
+                <?php endif; ?>
             </div>
         </div>
 
@@ -558,6 +560,13 @@ include_once 'templates/header.php';
             <label class="form-label">Qual projeto de vida?</label>
             <textarea name="projeto_vida" id="projeto_vida" class="form-control"
                 rows="3"><?= htmlspecialchars($paciente['projeto_vida'] ?? '') ?></textarea>
+        </div>
+    
+
+        <div class="mb-3">
+            <label class="form-label">Qual atividade paciente desenvolveu na comunidade?</label>
+            <textarea name="atividade" id="atividade" class="form-control"
+                rows="3"><?= htmlspecialchars($paciente['atividade'] ?? '') ?></textarea>
         </div>
         <hr>
         <script>

@@ -120,10 +120,10 @@ include_once 'templates/header.php'
       <label for="arquivo" class="form-label">Anexar Documentos, RG ou CPF (PDF ou imagem):</label>
         <input type="file" name="arquivo" id="arquivo" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
     </div>
-  </div>
   <div class="col-md-6">
     <label for="document" class="form-label">Anexar arquivo,Cartão SUS ou outro (pdf ou imagem):</label>
     <input type="file" name="document" id="document" class="form-control" accept=".pdf,.jpg,.jpeg,.png">
+  </div>
   </div>
 
 <script>
@@ -502,6 +502,10 @@ include_once 'templates/header.php'
 <div class="mb-3">
   <label class="form-label">Qual projeto de vida?</label>
   <textarea name="projeto_vida" id="projeto_vida" class="form-control" rows="3"><?= htmlspecialchars($pacientes['projeto_vida'] ?? '') ?></textarea>
+</div>
+<div class="mb-3">
+  <label class="form-label">Qual atividade paciente desenvolveu na comunidade?</label>
+  <textarea name="atividade" id="atividade" class="form-control" rows="3"><?= htmlspecialchars($pacientes['atividade'] ?? '') ?></textarea>
 </div>
 <hr>
 <script>
