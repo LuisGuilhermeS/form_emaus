@@ -1,5 +1,5 @@
 <?php
-include_once 'templates/header.php'
+include_once 'templates/header.php';
 ?>
 <div class="print-container">
   <div class="text-center">
@@ -33,6 +33,28 @@ include_once 'templates/header.php'
 
     <!-- Dados de Identificação -->
     <h4 class="text-center mb-4">Dados de Identificação</h4>
+
+<div class="row mb-3">
+  <div class="col-md-4"></div>
+    <div class="col-md-4 text-center">
+    <?php
+      // Define caminho da imagem (padrão se vazio)
+      $image = !empty($paciente['image']) ? $pacientes['image'] : 'image.jpg';
+      $fotoPath = 'config/uploads/' . $image;
+    ?>
+    <!-- Contêiner da imagem -->
+    <div id="profile-image-container"
+         style="width: 150px; height: 150px; background-image: url('<?= $fotoPath ?>'); background-size: cover; background-position: center; border-radius: 10px; margin: auto;">
+    </div>
+    <div class="mt-2">
+      <label for="image" class="form-label">Foto do Paciente (opcional)</label>
+      <input type="file" name="image" id="image" class="form-control" accept=".jpg,.jpeg,.png">
+    </div>
+  </div>
+
+  <div class="col-md-4"></div>
+</div>
+
   <div class="row mb-3">
       <div class="col-md-6">
       <label class="form-label">Nome Completo</label>

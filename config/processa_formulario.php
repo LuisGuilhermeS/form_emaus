@@ -47,6 +47,16 @@ if (!empty($dados)) {
     } else {
         $document = null; 
     }
+
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+    $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+    $newName = uniqid() . '.' . $ext;
+    $destino = __DIR__ . '/uploads/' . $newName;
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $destino)) {
+        // Salve $newName no banco de dados no campo correspondente
+    }
+}
+    
         $atividade = $dados['atividade']; 
         $data_chegada = $dados['data_chegada'];
         $data_saida = $dados['data_saida'];
@@ -96,7 +106,7 @@ if (!empty($dados)) {
         $motivos_procura = $dados['motivos_procura'];
         $projeto_vida = $dados['projeto_vida'];
 
-        $query = 'INSERT INTO pacientes (atividade,document,arquivo,data_chegada, data_saida, pernoite,
+        $query = 'INSERT INTO pacientes (image,atividade,document,arquivo,data_chegada, data_saida, pernoite,
         nome, nacionalidade, data_nasc, idade, sus, cpf, rg,nome_pai, nome_mae, estado_civil, filhos, qtd_filhos,
         local_pernoite, local_procedencia, chegada, encaminhamento_documentos,contato_familia,
         tempo_rua, motivo_rua,motivo_rua_outros,motivo_encaminhamento,
@@ -110,7 +120,7 @@ if (!empty($dados)) {
         escolaridade, trabalho, renda,
         motivos_procura, projeto_vida)
 
-        VALUES (:atividade,:document,:arquivo,:data_chegada, :data_saida, :pernoite,
+        VALUES (:image,:atividade,:document,:arquivo,:data_chegada, :data_saida, :pernoite,
         :nome, :nacionalidade, :data_nasc, :idade, :sus, :cpf, :rg, :nome_pai, :nome_mae, :estado_civil, :filhos, :qtd_filhos,
         :local_pernoite, :local_procedencia, :chegada, :encaminhamento_documentos, :contato_familia,
         :tempo_rua, :motivo_rua, :motivo_rua_outros, :motivo_encaminhamento,
@@ -125,7 +135,8 @@ if (!empty($dados)) {
         :motivos_procura, :projeto_vida)';
         
         $stmt = $conn->prepare($query);
-
+    
+        $stmt->bindParam(':image', $image);
         $stmt->bindParam(':atividade', $atividade);
         $stmt->bindParam(':document', $document);
         $stmt->bindParam(':arquivo', $arquivo);
@@ -228,6 +239,20 @@ if (!empty($dados)) {
         $document = null; 
     }
 
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+    $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+    $newName = uniqid() . '.' . $ext;
+    $destino = __DIR__ . '/uploads/' . $newName;
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $destino)) {
+        // Salve $newName no banco de dados no campo correspondente
+        $image = $newName; 
+    }else{
+        $_SESSION['msg'] = 'Erro ao mover a imagem.';
+            header("Location: ../index.php");
+            exit();
+    }
+
+}
         $atividade = $dados['atividade'];
         $id = $dados['id'];
         $data_chegada = $dados['data_chegada'];
@@ -279,7 +304,7 @@ if (!empty($dados)) {
         $projeto_vida = $dados['projeto_vida'];
 
         $query = 'UPDATE pacientes 
-        SET atividade=:atividade,document=:document,arquivo=:arquivo,data_chegada=:data_chegada, data_saida=:data_saida, pernoite=:pernoite,
+        SET image=:image, atividade=:atividade,document=:document,arquivo=:arquivo,data_chegada=:data_chegada, data_saida=:data_saida, pernoite=:pernoite,
         nome=:nome, nacionalidade=:nacionalidade, data_nasc=:data_nasc, idade=:idade, sus=:sus, cpf=:cpf, rg=:rg, nome_pai=:nome_pai, nome_mae=:nome_mae, estado_civil=:estado_civil, filhos=:filhos, qtd_filhos=:qtd_filhos,
         local_pernoite=:local_pernoite, local_procedencia=:local_procedencia, chegada=:chegada, encaminhamento_documentos=:encaminhamento_documentos, contato_familia=:contato_familia,
         tempo_rua=:tempo_rua, motivo_rua=:motivo_rua, motivo_rua_outros=:motivo_rua_outros, motivo_encaminhamento=:motivo_encaminhamento,
@@ -296,6 +321,7 @@ if (!empty($dados)) {
 
         $stmt = $conn->prepare($query);
 
+        $stmt->bindParam(':image', $image);    
         $stmt->bindParam(':atividade', $atividade);
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':document', $document);
