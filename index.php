@@ -3,7 +3,7 @@ include 'templates/header.php';
 ?>
 <div class="container mt-4">
     <div class="text-center">
-        <a class=" btn btn-primary" id="home-link" href="<?= $BASE_URL ?>criar.php">Criar novo Cadastro</a>
+        <a class=" btn btn-primary mb-4" id="home-link" href="<?= $BASE_URL ?>criar.php">Criar novo Cadastro</a>
     </div>
     <?php if (isset($printMsg) && $printMsg != ''): ?>
         <P id="msg"><?= $printMsg ?></P>
@@ -17,7 +17,8 @@ document.getElementById("busca").addEventListener("keyup", function() {
     let linhas = document.querySelectorAll("table tbody tr");
 
     linhas.forEach(function(linha) {
-        let nome = linha.cells[1].textContent.toLowerCase(); // Assume que o nome está na primeira coluna
+        //assume o nome que está na primeira coluna da tabela
+        let nome = linha.cells[1].textContent.toLowerCase(); 
         linha.style.display = nome.includes(filtro) ? "" : "none";
     });
 });
